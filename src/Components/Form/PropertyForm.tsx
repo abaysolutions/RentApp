@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { sendRegistrationForm } from "../../utils/requests";
 
 const initialValues: FormFields = {
   fullName: "",
@@ -20,7 +21,6 @@ const initialValues: FormFields = {
   rooms: 1,
   description: "",
 };
-
 const PropertyForm = () => {
   return (
     <div style={{ padding: 16, margin: "auto", maxWidth: 600 }}>
@@ -37,6 +37,7 @@ const PropertyForm = () => {
           initialValues={initialValues}
           onSubmit={(formData) => {
             console.log(JSON.stringify(formData, null, 2));
+            console.log(sendRegistrationForm(JSON.stringify(formData)));
           }}
         >
           {({ values, handleSubmit, isSubmitting }) => (
