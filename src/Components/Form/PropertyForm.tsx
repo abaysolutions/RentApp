@@ -36,8 +36,7 @@ const PropertyForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(formData) => {
-            console.log(JSON.stringify(formData, null, 2));
-            console.log(sendRegistrationForm(JSON.stringify(formData)));
+            sendRegistrationForm(JSON.stringify(formData));
           }}
         >
           {({ values, handleSubmit, isSubmitting }) => (

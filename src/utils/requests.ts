@@ -1,7 +1,5 @@
-import { FormFields } from "../Types/FormTypes";
-
-export const sendRegistrationForm = (form: any) => {
-  return fetch(
+export const sendRegistrationForm = async (form: string) => {
+  const data = await fetch(
     "https://e0nl13u2pf.execute-api.us-east-1.amazonaws.com/prod/submit",
     {
       method: "POST",
@@ -10,5 +8,6 @@ export const sendRegistrationForm = (form: any) => {
       },
       body: JSON.stringify({ form }),
     }
-  ).then((data) => console.log(data.status));
+  );
+  return console.log(data.status);
 };
