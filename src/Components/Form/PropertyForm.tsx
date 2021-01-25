@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
-import { FormFields } from "../../Types/FormTypes";
+import { FormFields, PreparedForm } from "../../Types/FormTypes";
 import {
   Button,
   CssBaseline,
@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { sendRegistrationForm } from "../../utils/requests";
+import { ImageDrop } from "../ImageDrop";
+import { convertImagesToArrayBuffer } from "../../utils/imageConverter";
 
 const initialValues: FormFields = {
   fullName: "",
@@ -20,6 +22,7 @@ const initialValues: FormFields = {
   price: 0,
   rooms: 1,
   description: "",
+  imageFiles: [],
 };
 const PropertyForm = () => {
   return (
@@ -36,10 +39,16 @@ const PropertyForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(formData) => {
-            sendRegistrationForm(JSON.stringify(formData));
+            console.log("Pre formatted", formData);
+            const preparedForm: PreparedForm = {
+              ...formData,
+              imageFiles: convertImagesToArrayBuffer(formData?.imageFiles),
+            };
+            console.log("Formatted Form", preparedForm);
+            sendRegistrationForm(JSON.stringify(preparedForm));
           }}
         >
-          {({ values, handleSubmit, isSubmitting }) => (
+          {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
             <Form>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={12}>
@@ -104,6 +113,9 @@ const PropertyForm = () => {
                     rows={6}
                     rowsMax={10}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <ImageDrop values={values} setFieldValue={setFieldValue} />
                 </Grid>
                 <Grid item style={{ marginTop: 24 }}>
                   <Button
