@@ -10,9 +10,12 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { sendRegistrationForm } from "../../utils/requests";
+import { sendRegistrationForm, sendImages } from "../../utils/requests";
 import { ImageDrop } from "../ImageDrop";
-import { convertImagesToArrayBuffer } from "../../utils/imageConverter";
+import {
+  convertImagesToArrayBuffer,
+  convertImagesToFileNameArray,
+} from "../../utils/imageConverter";
 
 const initialValues: FormFields = {
   fullName: "",
@@ -40,12 +43,13 @@ const PropertyForm = () => {
           initialValues={initialValues}
           onSubmit={(formData) => {
             console.log("Pre formatted", formData);
+            sendImages(JSON.stringify(formData));
             const preparedForm: PreparedForm = {
               ...formData,
-              imageFiles: convertImagesToArrayBuffer(formData?.imageFiles),
+              imageFiles: convertImagesToFileNameArray(formData?.imageFiles),
             };
             console.log("Formatted Form", preparedForm);
-            sendRegistrationForm(JSON.stringify(preparedForm));
+            sendRegistrationForm(JSON.stringify(formData));
           }}
         >
           {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
