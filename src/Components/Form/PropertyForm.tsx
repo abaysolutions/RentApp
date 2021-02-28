@@ -12,10 +12,7 @@ import {
 } from "@material-ui/core";
 import { sendRegistrationForm, uploadFile } from "../../utils/requests";
 import { ImageDrop } from "../ImageDrop";
-import {
-  convertImagesToArrayBuffer,
-  convertImagesToFileNameArray,
-} from "../../utils/imageConverter";
+import { convertImagesToFileNameArray } from "../../utils/imageConverter";
 
 const initialValues: FormFields = {
   fullName: "",
@@ -27,6 +24,7 @@ const initialValues: FormFields = {
   description: "",
   imageFiles: [],
 };
+
 const PropertyForm = () => {
   return (
     <div style={{ padding: 16, margin: "auto", maxWidth: 600 }}>
@@ -42,16 +40,18 @@ const PropertyForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(formData) => {
+            let fileCount = 0;
             console.log("Pre formatted", formData);
             formData.imageFiles.forEach((image) => {
-              uploadFile(image.name, image);
+              uploadFile(formData.phoneNumber + "-" + ++fileCount, image);
             });
             const preparedForm: PreparedForm = {
               ...formData,
-              imageFiles: convertImagesToFileNameArray(formData?.imageFiles),
+              imageFiles: fileCount,
             };
             console.log("Formatted Form", preparedForm);
-            sendRegistrationForm(JSON.stringify(formData));
+            sendRegistrationForm(JSON.stringify(preparedForm));
+            window.location.reload();
           }}
         >
           {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
