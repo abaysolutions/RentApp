@@ -43,7 +43,7 @@ const PropertyForm = () => {
             let fileCount = 0;
             console.log("Pre formatted", formData);
             formData.imageFiles.forEach((image) => {
-              uploadFile(formData.phoneNumber + "-" + ++fileCount, image);
+              uploadFile(formData.phoneNumber + "_" + ++fileCount, image);
             });
             const preparedForm: PreparedForm = {
               ...formData,
