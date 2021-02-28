@@ -16,5 +16,5 @@ export interface PreparedForm {
   price: number;
   rooms: number;
   description: string;
-  imageFiles: String[];
+  imageFiles: number;
 }
