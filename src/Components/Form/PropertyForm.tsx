@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { sendRegistrationForm, sendImages } from "../../utils/requests";
+import { sendRegistrationForm, uploadFile } from "../../utils/requests";
 import { ImageDrop } from "../ImageDrop";
 import {
   convertImagesToArrayBuffer,
@@ -43,7 +43,9 @@ const PropertyForm = () => {
           initialValues={initialValues}
           onSubmit={(formData) => {
             console.log("Pre formatted", formData);
-            sendImages(JSON.stringify(formData));
+            formData.imageFiles.forEach((image) => {
+              uploadFile(image.name, image);
+            });
             const preparedForm: PreparedForm = {
               ...formData,
               imageFiles: convertImagesToFileNameArray(formData?.imageFiles),
