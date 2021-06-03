@@ -51,7 +51,6 @@ const PropertyForm = () => {
             };
             console.log("Formatted Form", preparedForm);
             sendRegistrationForm(JSON.stringify(preparedForm));
-            window.location.reload();
           }}
         >
           {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
